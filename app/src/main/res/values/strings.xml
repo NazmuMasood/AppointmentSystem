@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AppointmentSystem</string>
+
+    <!--facebook api info-->
+    <string name="facebook_app_id">399866404019018</string>
+    <string name="fb_login_protocol_scheme">fb399866404019018</string>
+
+</resources>
