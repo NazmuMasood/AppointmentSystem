@@ -29,7 +29,7 @@ public class CallReceiver extends PhoneCallReceiver
             public void run()
             {
                 try {
-                    System.out.println("Starting TestMyCustomDialog");
+                    System.out.println("Starting AppointmentSystem");
                     context.startActivity(intent);
                 }
                 catch (Exception e){e.printStackTrace();}
