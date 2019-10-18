@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         checkPermission();
 
         //App title as there's no action bar
-        appTitle = findViewById(R.id.appTitle);
-        String stringAppTitle = "AppointmentSystem App"; appTitle.setText(stringAppTitle);
+        /*appTitle = findViewById(R.id.appTitle);
+        String stringAppTitle = "AppointmentSystem App"; appTitle.setText(stringAppTitle);*/
 
         //Button for asking permission to monitor phone state
         seekPermission = findViewById(R.id.seekPermissionButton);
