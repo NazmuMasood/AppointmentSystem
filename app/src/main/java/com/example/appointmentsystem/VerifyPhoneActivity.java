@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class VerifyPhoneActivity extends AppCompatActivity {
     EditText verificationCode; Button signupButton; ProgressBar progressBar;
 
-    //Firebase phone auth variables
+    //FireBase phone auth variables
     String verificationId;
     FirebaseAuth mAuth;
 
@@ -43,7 +43,13 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         String phoneNumber = getIntent().getStringExtra("phoneNumber");
         makeToast("Hello "+phoneNumber);
 
-        sendVerificationCode(phoneNumber);
+        if (phoneNumber.equals("+8801555555555")){
+            testSendVerificationCode();
+        }
+        else {
+            sendVerificationCode(phoneNumber);
+        }
+
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,12 +102,52 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 number,
-                60,
+                30,
                 TimeUnit.SECONDS,
                 TaskExecutors.MAIN_THREAD,
                 mCallBack
         );
 
+    }
+
+    private void testSendVerificationCode(){
+        progressBar.setVisibility(View.VISIBLE);
+
+        final String phoneNum = "+8801555555555";
+        final String testVerificationCode = "123456";
+
+        // Whenever verification is triggered with the whitelisted number,
+        // provided it is not set for auto-retrieval, onCodeSent will be triggered.
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNum, 30L /*timeout*/, TimeUnit.SECONDS,
+                this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+                    @Override
+                    public void onCodeSent(String verificationID,
+                                           PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                        // Save the verification id somewhere
+                        verificationId = verificationID;
+
+                        makeToast("A verification code has been sent to "+phoneNum);
+
+                        verificationCode.setText(testVerificationCode);
+                        progressBar.setVisibility(View.GONE);
+
+                        // The corresponding whitelisted code above should be used to complete sign-in.
+                        //MainActivity.this.enableUserManuallyInputCode();
+                    }
+
+                    @Override
+                    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+                        // Sign in with the credential
+                    }
+
+                    @Override
+                    public void onVerificationFailed(FirebaseException e) {
+                        makeToast(e.getMessage());
+                    }
+
+                });
     }
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -126,11 +172,6 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         @Override
         public void onVerificationFailed(FirebaseException e) {
             makeToast(e.getMessage());
-
-            Intent intent = new Intent(VerifyPhoneActivity.this, SignupActivity.class);
-            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-            startActivity(intent);
         }
     };
 

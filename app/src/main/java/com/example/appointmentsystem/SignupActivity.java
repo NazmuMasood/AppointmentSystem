@@ -56,7 +56,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        phoneNoET.setText("1521328932");
+        phoneNoET.setText("1555555555");
 
         //Signup button onClick listener
         sendCodeButton.setOnClickListener(new View.OnClickListener() {
