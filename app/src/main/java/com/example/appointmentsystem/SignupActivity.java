@@ -13,12 +13,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.w3c.dom.Text;
 //import com.facebook.FacebookSdk;
 //import com.facebook.appevents.AppEventsLogger;
 
 public class SignupActivity extends AppCompatActivity {
-    EditText phoneNoET; Button signupButton;
+    EditText phoneNoET; Button sendCodeButton;
     Spinner spinner; EditText countryCodeET;
 
     @Override
@@ -30,7 +32,7 @@ public class SignupActivity extends AppCompatActivity {
         //Initializing content
         phoneNoET = findViewById(R.id.phoneNoET);
 
-        signupButton = findViewById(R.id.signupButton);
+        sendCodeButton = findViewById(R.id.sendCodeButton);
 
         countryCodeET = findViewById(R.id.countryCodeET);
         countryCodeET.setFocusable(false);
@@ -57,7 +59,7 @@ public class SignupActivity extends AppCompatActivity {
         phoneNoET.setText("1521328932");
 
         //Signup button onClick listener
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        sendCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //makeToast("Phone number is "+phoneNo.getText().toString());
@@ -81,7 +83,7 @@ public class SignupActivity extends AppCompatActivity {
 
         String number = phoneNoET.getText().toString().trim();
 
-        if (number.isEmpty() || number.length() < 10){
+        if (number.length() != 10){
             phoneNoET.setError("Valid Number is required");
             phoneNoET.requestFocus();
             return;
@@ -92,5 +94,17 @@ public class SignupActivity extends AppCompatActivity {
         Intent intent = new Intent(SignupActivity.this, VerifyPhoneActivity.class);
         intent.putExtra("phoneNumber", phoneNumber);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            Intent intent = new Intent(this, SignedupActivity.class);
+            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            startActivity(intent);
+        }
     }
 }
