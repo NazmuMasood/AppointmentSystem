@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 public class VerifyPhoneActivity extends AppCompatActivity {
     EditText verificationCode; Button signupButton; ProgressBar progressBar;
+    String phoneNumber;
 
     //FireBase phone auth variables
     String verificationId;
@@ -40,8 +41,8 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
 
-        String phoneNumber = getIntent().getStringExtra("phoneNumber");
-        makeToast("Hello "+phoneNumber);
+        phoneNumber = getIntent().getStringExtra("phoneNumber");
+        //makeToast("Hello "+phoneNumber);
 
         if (phoneNumber.equals("+8801555555555")){
             testSendVerificationCode();
@@ -157,6 +158,8 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
+
+            makeToast("A verification code has been sent to "+phoneNumber);
         }
 
         @Override
