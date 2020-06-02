@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context=".CreateApptActivity">
+
+    <Button
+        android:id="@+id/sliding_button"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:visibility="gone" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:clickable="false"
+        android:focusable="false"
+        app:cardBackgroundColor="#EDE7F6"
+        app:cardCornerRadius="5dp"
+        tools:context=".CreateApptActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent">
+
+                <LinearLayout
+                    android:id="@+id/scrollView_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:divider="@drawable/empty_divider"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:showDividers="middle">
+
+                    <!--            <TextView-->
+                    <!--                android:id="@+id/kiArKorboTextView"-->
+                    <!--                android:layout_width="match_parent"-->
+                    <!--                android:layout_height="match_parent"-->
+                    <!--                android:background="@android:color/white"-->
+                    <!--                android:text="TextView"-->
+                    <!--                android:textColor="@android:color/black"-->
+                    <!--                android:visibility="gone" />-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="@drawable/empty_divider"
+                        android:orientation="horizontal"
+                        android:showDividers="middle">
+
+                        <EditText
+                            android:id="@+id/patientNameET"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_edit_text"
+                            android:ems="10"
+                            android:fontFamily="@font/open_sans_light"
+                            android:hint="Patient Name"
+                            android:inputType="textPersonName"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                        <EditText
+                            android:id="@+id/patientPhoneET"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_edit_text"
+                            android:ems="10"
+                            android:fontFamily="@font/open_sans_light"
+                            android:hint="Phone No."
+                            android:inputType="phone"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/apptDateET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_edit_text"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:fontFamily="@font/open_sans_light"
+                        android:hint="Date of Appointment"
+                        android:inputType="textPersonName"
+                        android:padding="5dp"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="@drawable/empty_divider"
+                        android:orientation="horizontal"
+                        android:showDividers="middle">
+
+                        <EditText
+                            android:id="@+id/startTimeET"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_edit_text"
+                            android:ems="10"
+                            android:focusable="false"
+                            android:fontFamily="@font/open_sans_light"
+                            android:hint="Start Time"
+                            android:inputType="textPersonName"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                        <EditText
+                            android:id="@+id/endTimeET"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_edit_text"
+                            android:ems="10"
+                            android:focusable="false"
+                            android:fontFamily="@font/open_sans_light"
+                            android:hint="End Time"
+                            android:inputType="textPersonName"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="@drawable/empty_divider"
+                        android:orientation="horizontal"
+                        android:showDividers="middle">
+
+                        <EditText
+                            android:id="@+id/tokenET"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:background="@drawable/bg_edit_text"
+                            android:ems="10"
+                            android:fontFamily="@font/open_sans_light"
+                            android:hint="Token"
+                            android:inputType="number"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />/>
+
+                        <EditText
+                            android:id="@+id/reasonET"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/bg_edit_text"
+                            android:ems="10"
+                            android:fontFamily="@font/open_sans_light"
+                            android:hint="Reason For Visiting"
+                            android:inputType="textPersonName"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/bottom_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/empty_divider"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:showDividers="middle">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/createApptButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/custom_button"
+            android:text="Create Appointment"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:fontFamily="@font/open_sans_light"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/closeApptDialogButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button"
+            android:fontFamily="@font/open_sans_light"
+            android:text="Cancel"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</LinearLayout>
