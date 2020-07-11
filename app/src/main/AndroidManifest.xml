@@ -15,22 +15,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/CustomTheme">
+        <activity android:name=".bottomNavActivity">
+
+        </activity>
         <activity android:name=".SignedupActivity" />
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".VerifyPhoneActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SignupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".VerifyPhoneActivity" />
+        <activity android:name=".MainActivity">
+
+        </activity>
         <activity
             android:name=".PopupDialogueActivity"
             android:noHistory="true"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
-        <activity android:name=".CreateApptActivity"
+        <activity
+            android:name=".CreateApptActivity"
             android:noHistory="true"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
 

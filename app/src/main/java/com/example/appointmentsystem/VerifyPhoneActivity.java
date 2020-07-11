@@ -12,24 +12,29 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
 
 public class VerifyPhoneActivity extends AppCompatActivity {
     EditText verificationCode; Button signupButton; ProgressBar progressBar;
-    String phoneNumber;
+    String phoneNumber, email, password;
 
     //FireBase phone auth variables
     String verificationId;
-    FirebaseAuth mAuth;
+    FirebaseAuth mAuth; FirebaseDatabase firebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +45,11 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         signupButton = findViewById(R.id.enterCodeButton);
         progressBar = findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
         phoneNumber = getIntent().getStringExtra("phoneNumber");
-        //makeToast("Hello "+phoneNumber);
+        email = getIntent().getStringExtra("email");
+        password = getIntent().getStringExtra("password");
 
         if (phoneNumber.equals("+8801555555555")){
             testSendVerificationCode();
@@ -75,10 +82,48 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
 
-                            Intent intent = new Intent(VerifyPhoneActivity.this, SignedupActivity.class);
-                            //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            //Linking phone auth with email & password auth
+                            AuthCredential credential = EmailAuthProvider.getCredential(email, password);
+                            mAuth.getCurrentUser().linkWithCredential(credential)
+                                    .addOnCompleteListener(VerifyPhoneActivity.this, new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                //makeToast("Email linked");
+                                                //FirebaseUser user = task.getResult().getUser();
 
-                            startActivity(intent);
+                                                FirebaseUser user = mAuth.getCurrentUser();
+
+                                                //Saving user into firebase database 'users' node
+                                                User newUser = new User(user.getPhoneNumber(), user.getEmail());
+                                                firebaseDatabase.getReference("users")
+                                                        .child(user.getUid())
+                                                        .setValue(newUser)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                makeToast("Registration successful");
+                                                                //Takes user into home screen
+                                                                Intent intent = new Intent(VerifyPhoneActivity.this, SignedupActivity.class);
+                                                                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                                startActivity(intent);
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                makeToast("Error: "+e.getMessage());
+                                                            }
+                                                        });
+
+                                            } else {
+                                                makeToast("Authentication failed.");
+                                                //updateUI(null);
+                                            }
+
+                                            // ...
+                                        }
+                                    });
 
                         }
                         else {

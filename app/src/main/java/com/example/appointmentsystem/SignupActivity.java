@@ -1,9 +1,16 @@
 package com.example.appointmentsystem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,14 +21,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
+
+import java.util.regex.Pattern;
 //import com.facebook.FacebookSdk;
 //import com.facebook.appevents.AppEventsLogger;
 
 public class SignupActivity extends AppCompatActivity {
     EditText phoneNoET; Button sendCodeButton;
     Spinner spinner; EditText countryCodeET;
+    EditText emailSignupET, passwordSignupET; String password;
+    TextView loginRedirectTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +47,11 @@ public class SignupActivity extends AppCompatActivity {
 
         //Initializing content
         phoneNoET = findViewById(R.id.phoneNoET);
+        emailSignupET = findViewById(R.id.emailSignupET);
+        passwordSignupET = findViewById(R.id.passwordSignupET);
+
+        loginRedirectTV = findViewById(R.id.loginRedirectTV);
+        setupLoginHlink();
 
         sendCodeButton = findViewById(R.id.sendCodeButton);
 
@@ -38,9 +59,31 @@ public class SignupActivity extends AppCompatActivity {
         countryCodeET.setFocusable(false);
 
         spinner = findViewById(R.id.countryCodeSpinner);
+        setupSpinner();
 
-        spinner.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item, CountryData.countryNames));
+        phoneNoET.setText("1555555555");
+
+        //Signup button onClick listener
+        sendCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signupHandler();
+            }
+        });
+
+
+    }
+
+    private void setupSpinner() {
+        ArrayAdapter<String> adapter_country = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, CountryData.countryNames){
+            @Override
+            public int getCount() {
+                return CountryData.countryNames.length-1;
+            }
+        };
+        spinner.setAdapter(adapter_country);
+        //spinner.setSelection(CountryData.countryNames.length-1);
         spinner.setSelection(13);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -55,19 +98,26 @@ public class SignupActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        phoneNoET.setText("1555555555");
-
-        //Signup button onClick listener
-        sendCodeButton.setOnClickListener(new View.OnClickListener() {
+    private void setupLoginHlink() {
+        SpannableString ss = new SpannableString(getString(R.string.login_redirect_hlink));
+        ClickableSpan cs = new ClickableSpan() {
             @Override
-            public void onClick(View v) {
-                //makeToast("Phone number is "+phoneNo.getText().toString());
-                signupHandler();
+            public void onClick(@NonNull View widget) {
+                Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
             }
-        });
 
-
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setColor(Color.BLUE);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(cs, 19, 24, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        loginRedirectTV.setText(ss);
+        loginRedirectTV.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     //Useful method for making toast
@@ -82,18 +132,31 @@ public class SignupActivity extends AppCompatActivity {
         String code = CountryData.countryAreaCodes[spinner.getSelectedItemPosition()];
 
         String number = phoneNoET.getText().toString().trim();
+        String email = emailSignupET.getText().toString().trim();
+        password = passwordSignupET.getText().toString();
 
-        if (number.length() != 10){
-            phoneNoET.setError("Valid Number is required");
+        if (spinner.getSelectedItem().equals("Select a country")){
+            makeToast("Please select a country");
+            return;
+        }
+        if (!isValidMobile(number)){
+            phoneNoET.setError("Valid number required");
             phoneNoET.requestFocus();
+            return;
+        }
+        if (!isValidMail(email)){
+            emailSignupET.setError("Valid email required");
+            phoneNoET.requestFocus();
+            return;
+        }
+        if (password.length()<6){
+            passwordSignupET.setError("Password must be at least 6 characters in length");
+            passwordSignupET.requestFocus();
             return;
         }
 
         String phoneNumber = "+" + code + number;
-
-        Intent intent = new Intent(SignupActivity.this, VerifyPhoneActivity.class);
-        intent.putExtra("phoneNumber", phoneNumber);
-        startActivity(intent);
+        checkUserAlreadyExist(phoneNumber, email);
     }
 
     @Override
@@ -106,5 +169,63 @@ public class SignupActivity extends AppCompatActivity {
 
             startActivity(intent);
         }
+    }
+
+    private void checkUserAlreadyExist(final String phone, final String email){
+        final DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        usersRef.orderByChild("phone").equalTo(phone)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    makeToast("Phone number already registered. Use a different number or login instead");
+                }
+                else {
+                    usersRef.orderByChild("email").equalTo(email)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()){
+                                makeToast("Email already registered. Use a different email account or login instead");
+                            }
+                            else {
+                                Intent intent = new Intent(SignupActivity.this, VerifyPhoneActivity.class);
+                                intent.putExtra("phoneNumber", phone);
+                                intent.putExtra("email", email);
+                                intent.putExtra("password", password);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private boolean isValidMail(String email) {
+
+        String EMAIL_STRING = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        return Pattern.compile(EMAIL_STRING).matcher(email).matches();
+
+    }
+
+    private boolean isValidMobile(String phone) {
+        if(!Pattern.matches("[a-zA-Z]+", phone)) {
+            return phone.length() > 6 && phone.length() <= 13;
+        }
+        return false;
     }
 }

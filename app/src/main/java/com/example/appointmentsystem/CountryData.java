@@ -44,7 +44,7 @@ public class CountryData {
             "United Arab Emirates", "Uganda", "United Kingdom", "Ukraine",
             "Uruguay", "United States", "Uzbekistan", "Vanuatu",
             "Holy See (vatican City State)", "Venezuela", "Viet Nam",
-            "Wallis And Futuna", "Yemen", "Zambia", "Zimbabwe"};
+            "Wallis And Futuna", "Yemen", "Zambia", "Zimbabwe","Select a country"};
 
     public static final String[] countryAreaCodes = {"93", "355", "213",
             "376", "244", "672", "54", "374", "297", "61", "43", "994", "973",
@@ -67,5 +67,5 @@ public class CountryData {
             "82", "34", "94", "290", "508", "249", "597", "268", "46", "41",
             "963", "886", "992", "255", "66", "228", "690", "676", "216", "90",
             "993", "688", "971", "256", "44", "380", "598", "1", "998", "678",
-            "39", "58", "84", "681", "967", "260", "263"};
+            "39", "58", "84", "681", "967", "260", "263",""};
 }
