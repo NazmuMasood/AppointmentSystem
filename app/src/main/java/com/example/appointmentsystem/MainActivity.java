@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Signup button for opening signup activity
-        signupButton = findViewById(R.id.signupButton);
+        signupButton = findViewById(R.id.testSignupButton);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

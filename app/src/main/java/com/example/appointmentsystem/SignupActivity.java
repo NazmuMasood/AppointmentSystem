@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,16 +28,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.regex.Pattern;
 //import com.facebook.FacebookSdk;
 //import com.facebook.appevents.AppEventsLogger;
 
 public class SignupActivity extends AppCompatActivity {
-    EditText phoneNoET; Button sendCodeButton;
+    EditText phoneNoET; Button signupButton;
     Spinner spinner; EditText countryCodeET;
     EditText emailSignupET, passwordSignupET; String password;
+    ProgressBar signupPB;
     TextView loginRedirectTV;
 
     @Override
@@ -53,7 +53,8 @@ public class SignupActivity extends AppCompatActivity {
         loginRedirectTV = findViewById(R.id.loginRedirectTV);
         setupLoginHlink();
 
-        sendCodeButton = findViewById(R.id.sendCodeButton);
+        signupButton = findViewById(R.id.signupButton);
+        signupPB = findViewById(R.id.signupPB);
 
         countryCodeET = findViewById(R.id.countryCodeET);
         countryCodeET.setFocusable(false);
@@ -64,7 +65,7 @@ public class SignupActivity extends AppCompatActivity {
         phoneNoET.setText("1555555555");
 
         //Signup button onClick listener
-        sendCodeButton.setOnClickListener(new View.OnClickListener() {
+        signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signupHandler();
@@ -105,7 +106,8 @@ public class SignupActivity extends AppCompatActivity {
         ClickableSpan cs = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                finish();
             }
 
             @Override
@@ -146,7 +148,7 @@ public class SignupActivity extends AppCompatActivity {
         }
         if (!isValidMail(email)){
             emailSignupET.setError("Valid email required");
-            phoneNoET.requestFocus();
+            emailSignupET.requestFocus();
             return;
         }
         if (password.length()<6){
@@ -156,6 +158,7 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         String phoneNumber = "+" + code + number;
+        signupPB.setVisibility(View.VISIBLE);
         checkUserAlreadyExist(phoneNumber, email);
     }
 
@@ -180,6 +183,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     makeToast("Phone number already registered. Use a different number or login instead");
+                    signupPB.setVisibility(View.GONE);
                 }
                 else {
                     usersRef.orderByChild("email").equalTo(email)
@@ -188,12 +192,14 @@ public class SignupActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()){
                                 makeToast("Email already registered. Use a different email account or login instead");
+                                signupPB.setVisibility(View.GONE);
                             }
                             else {
                                 Intent intent = new Intent(SignupActivity.this, VerifyPhoneActivity.class);
                                 intent.putExtra("phoneNumber", phone);
                                 intent.putExtra("email", email);
                                 intent.putExtra("password", password);
+                                signupPB.setVisibility(View.GONE);
                                 startActivity(intent);
                             }
                         }
@@ -228,4 +234,5 @@ public class SignupActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }

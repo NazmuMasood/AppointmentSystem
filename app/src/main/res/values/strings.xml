@@ -8,4 +8,6 @@
     <string name="fb_login_protocol_scheme">fb399866404019018</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">[ACCOUNT_KIT_CLIENT_TOKEN]</string>-->
     <string name="login_redirect_hlink">Already signed up? Login</string>
+    <string name="signup_redirect_hlink">No account? Sign up</string>
+    <string name="password_reset_hlink">Forgot password?</string>
 </resources>

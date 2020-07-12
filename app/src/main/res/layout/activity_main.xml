@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/signupButton"
+        android:id="@+id/testSignupButton"
         android:layout_width="123dp"
         android:layout_height="46dp"
         android:layout_marginTop="50dp"
@@ -47,14 +47,14 @@
         app:layout_constraintTop_toBottomOf="@+id/seekPermissionButton" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/testLoginButton"
         android:layout_width="123dp"
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
         android:text="LOGIN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupButton" />
+        app:layout_constraintTop_toBottomOf="@+id/testSignupButton" />
 
     <Button
         android:id="@+id/createApptDialogButton"
