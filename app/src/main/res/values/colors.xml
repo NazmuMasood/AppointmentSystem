@@ -9,4 +9,7 @@
     <color name="lightButtonColor">#4AABF8</color>
     <color name="darkButtonColor">#075CDC</color>
 
+    <color name="custom_yellow">#fece2f</color>
+    <color name="custom_dark_gray">#5b5b5b</color>
+    <color name="custom_pink">#ffee82ee</color>
 </resources>

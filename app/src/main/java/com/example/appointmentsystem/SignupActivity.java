@@ -77,7 +77,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private void setupSpinner() {
         ArrayAdapter<String> adapter_country = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item, CountryData.countryNames){
+                R.layout.bg_spinner_runtime_text, CountryData.countryNames){
             @Override
             public int getCount() {
                 return CountryData.countryNames.length-1;
