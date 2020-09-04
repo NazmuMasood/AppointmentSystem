@@ -1,4 +1,4 @@
-package com.example.appointmentsystem;
+package com.example.appointmentsystem.views.book_appointment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

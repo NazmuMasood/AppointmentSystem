@@ -1,4 +1,4 @@
-package com.example.appointmentsystem;
+package com.example.appointmentsystem.views.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.appointmentsystem.R;
+import com.example.appointmentsystem.models.User;
+import com.example.appointmentsystem.views.user_profile.UserProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -20,12 +23,12 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class VerifyPhoneActivity extends AppCompatActivity {
@@ -95,7 +98,9 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                                 //Saving user into firebase database 'users' node
-                                                User newUser = new User(user.getPhoneNumber(), user.getEmail());
+                                                User newUser = new User(user.getPhoneNumber(),
+                                                        user.getEmail(),
+                                                        new Date(System.currentTimeMillis()).toString());
                                                 firebaseDatabase.getReference("users")
                                                         .child(user.getUid())
                                                         .setValue(newUser)
@@ -104,7 +109,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 makeToast("Registration successful");
                                                                 //Takes user into home screen
-                                                                Intent intent = new Intent(VerifyPhoneActivity.this, SignedupActivity.class);
+                                                                Intent intent = new Intent(VerifyPhoneActivity.this, UserProfileActivity.class);
                                                                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                                 startActivity(intent);
                                                             }

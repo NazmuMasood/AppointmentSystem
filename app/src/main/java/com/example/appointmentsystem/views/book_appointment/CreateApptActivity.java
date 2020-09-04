@@ -1,6 +1,5 @@
-package com.example.appointmentsystem;
+package com.example.appointmentsystem.views.book_appointment;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -9,7 +8,6 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,9 +20,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
+import com.example.appointmentsystem.R;
+
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class CreateApptActivity extends Activity implements View.OnTouchListener{

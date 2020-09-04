@@ -1,4 +1,4 @@
-package com.example.appointmentsystem;
+package com.example.appointmentsystem.models;
 
 import java.util.Date;
 

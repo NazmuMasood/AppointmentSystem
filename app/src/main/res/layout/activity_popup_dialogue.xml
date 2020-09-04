@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".PopupDialogueActivity">
+    tools:context=".views.calling_screen.PopupDialogueActivity">
 
     <Button
         android:id="@+id/sliding_button"

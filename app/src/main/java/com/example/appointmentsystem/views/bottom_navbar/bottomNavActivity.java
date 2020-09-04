@@ -1,4 +1,4 @@
-package com.example.appointmentsystem;
+package com.example.appointmentsystem.views.bottom_navbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.appointmentsystem.R;
+import com.example.appointmentsystem.fragments.AppointmentsFragment;
+import com.example.appointmentsystem.fragments.HomeFragment;
+import com.example.appointmentsystem.fragments.ProfileFragment;
+import com.example.appointmentsystem.fragments.SettingsFragment;
+import com.example.appointmentsystem.views.book_appointment.CreateApptActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

@@ -1,4 +1,4 @@
-package com.example.appointmentsystem;
+package com.example.appointmentsystem.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -15,6 +15,11 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.appointmentsystem.views.calling_screen.PopupDialogueActivity;
+import com.example.appointmentsystem.R;
+import com.example.appointmentsystem.views.auth.SignupActivity;
+import com.example.appointmentsystem.views.book_appointment.CreateApptActivity;
 
 public class MainActivity extends AppCompatActivity {
 

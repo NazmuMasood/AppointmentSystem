@@ -1,4 +1,4 @@
-package com.example.appointmentsystem;
+package com.example.appointmentsystem.views.auth;
 
 public class CountryData {
     public static final String[] countryNames = {"Afghanistan", "Albania",

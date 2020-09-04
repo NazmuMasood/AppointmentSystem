@@ -1,4 +1,4 @@
-package com.example.appointmentsystem;
+package com.example.appointmentsystem.views.calling_screen;
 
 import android.app.Activity;
 import android.os.Build;
@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.appointmentsystem.R;
 
 public class PopupDialogueActivity extends Activity implements View.OnTouchListener{
 
