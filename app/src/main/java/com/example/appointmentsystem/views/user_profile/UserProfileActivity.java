@@ -1,5 +1,6 @@
 package com.example.appointmentsystem.views.user_profile;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import com.example.appointmentsystem.R;
 import com.example.appointmentsystem.models.Doctor;
 import com.example.appointmentsystem.views.auth.LoginActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class UserProfileActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeLayout;
@@ -53,16 +58,14 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
         setupViewComponents();
-        progressBar.setVisibility(View.VISIBLE);
         loadUserData();
-        logoutButton.setOnClickListener(logoutListener);
-        updateProfileButton.setOnClickListener(updateProfileListener);
     }
 
     private void loadUserData() {
-        //TODO: Actually create user instance by check against the uId..
+        progressBar.setVisibility(View.VISIBLE);
+        //TODOO: Actually create user instance by check against the uId..
         //..if you're using own rest api;
-        dbRef.child("doctors").orderByChild("uId").equalTo(fbUser.getUid())
+        dbRef.child("users-profile").orderByChild("uId").equalTo(fbUser.getUid())
                 .addListenerForSingleValueEvent(doctorProfileListener);
         emailET.setText(fbUser.getEmail());
         phoneET.setText(fbUser.getPhoneNumber());
@@ -76,7 +79,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 return;
             }
-            doctor = dataSnapshot.getValue(Doctor.class);
+            Log.d("dataSnapshot", dataSnapshot.getValue().toString());
+            Doctor doctor = dataSnapshot.getValue(Doctor.class);
             fullNameTV.setText(doctor.name);
             fullNameET.setText(doctor.name);
             serviceTypeET.setText(doctor.serviceType);
@@ -102,7 +106,39 @@ public class UserProfileActivity extends AppCompatActivity {
         agencyNameET.setError(null);
         addressET.setError(null);
         apptPhoneET.setError(null);
-        Toast.makeText(getApplicationContext(), "Update!", Toast.LENGTH_SHORT).show();
+
+        String name, serviceType, designation, agencyName, address, apptPhone;
+        name = fullNameET.getText().toString().trim();
+        serviceType = serviceTypeET.getText().toString().trim();
+        designation = designationET.getText().toString().trim();
+        agencyName = agencyNameET.getText().toString().trim();
+        address = addressET.getText().toString().trim();
+        apptPhone = apptPhoneET.getText().toString().trim();
+
+        Doctor newDoctorProfile = new Doctor(name, serviceType, designation, agencyName, address, apptPhone, fbUser.getUid());
+        //Map<String, Object> DoctorProfileValues = newDoctorProfile.toMap();
+        progressBar.setVisibility(View.VISIBLE);
+        String key = dbRef.child("users-profile").push().getKey();
+        dbRef.child("users-profile").child(key).setValue(newDoctorProfile)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "Profile updated successfully", Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE);
+
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Update failed. Please try again...", Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
     }
 
     private void setupViewComponents() {
@@ -113,6 +149,8 @@ public class UserProfileActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.profilePB);
         progressBar.setIndeterminate(true);
         updateProfileButton = findViewById(R.id.updateProfileButton);
+        logoutButton.setOnClickListener(logoutListener);
+        updateProfileButton.setOnClickListener(updateProfileListener);
 
         fullNameET = findViewById(R.id.full_name_profile);
         serviceTypeET = findViewById(R.id.service_type_profile);
@@ -220,6 +258,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
             try {
                 Thread.sleep(2000);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
             } catch (InterruptedException e) {
 
                 e.printStackTrace();
