@@ -19,4 +19,8 @@
         <item name="android:textColor">#333333</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
+
+    <style name="AppTheme.WhiteAccent">
+        <item name="colorAccent">#FFFFFF</item> <!-- Whatever color you want-->
+    </style>
 </resources>

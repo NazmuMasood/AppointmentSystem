@@ -5,6 +5,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +42,7 @@ public class UserProfileActivity extends AppCompatActivity {
             emailET,
             phoneET;
     TextView fullNameTV;
-    ProgressBar loadingPB;
+    ProgressBar progressBar;
     FirebaseUser fbUser;
     Doctor doctor;
     private DatabaseReference dbRef;
@@ -51,7 +53,7 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
         setupViewComponents();
-        loadingPB.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         loadUserData();
         logoutButton.setOnClickListener(logoutListener);
         updateProfileButton.setOnClickListener(updateProfileListener);
@@ -71,7 +73,7 @@ public class UserProfileActivity extends AppCompatActivity {
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (!dataSnapshot.exists()) {
                 apptPhoneET.setText(fbUser.getPhoneNumber());
-                loadingPB.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
                 return;
             }
             doctor = dataSnapshot.getValue(Doctor.class);
@@ -82,7 +84,7 @@ public class UserProfileActivity extends AppCompatActivity {
             agencyNameET.setText(doctor.agencyName);
             addressET.setText(doctor.address);
             apptPhoneET.setText(doctor.appointmentPhone);
-            loadingPB.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
         }
 
         @Override
@@ -108,7 +110,8 @@ public class UserProfileActivity extends AppCompatActivity {
         swipeLayout.setOnRefreshListener(swipeListener);
         logoutButton = findViewById(R.id.logoutButton);
         fullNameTV = findViewById(R.id.full_name_field);
-        loadingPB = findViewById(R.id.profilePB);
+        progressBar = findViewById(R.id.profilePB);
+        progressBar.setIndeterminate(true);
         updateProfileButton = findViewById(R.id.updateProfileButton);
 
         fullNameET = findViewById(R.id.full_name_profile);
@@ -131,6 +134,7 @@ public class UserProfileActivity extends AppCompatActivity {
     SwipeRefreshLayout.OnRefreshListener swipeListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
+            progressBar.setVisibility(View.VISIBLE);
             new DemoAsync().execute();
         }
     };
@@ -232,6 +236,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
             // Notify swipeRefreshLayout that the refresh has finished
             swipeLayout.setRefreshing(false);
+            progressBar.setVisibility(View.GONE);
         }
 
     }
