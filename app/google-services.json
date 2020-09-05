@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "799881253554",
+    "firebase_url": "https://appointmentsystem-94ab7.firebaseio.com",
+    "project_id": "appointmentsystem-94ab7",
+    "storage_bucket": "appointmentsystem-94ab7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799881253554:android:fc36f12dd31d4ea7472fab",
+        "android_client_info": {
+          "package_name": "com.example.appointmentsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799881253554-cjd7dk4u05aijp2qpb6dpu4964a0cvq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appointmentsystem",
+            "certificate_hash": "069da2a5c887481d243bd5a94a2e5c2147709919"
+          }
+        },
+        {
+          "client_id": "799881253554-vvoikqk7egqv3mpld79g273cspekeank.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdFfdHQ_OaTcWgMr5fVTv2gUa6KgrpM-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799881253554-vvoikqk7egqv3mpld79g273cspekeank.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
