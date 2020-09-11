@@ -80,15 +80,26 @@ public class UserProfileActivity extends AppCompatActivity {
                 return;
             }
             Log.d("dataSnapshot", dataSnapshot.getValue().toString());
-            Doctor doctor = dataSnapshot.getValue(Doctor.class);
-            fullNameTV.setText(doctor.name);
-            fullNameET.setText(doctor.name);
-            serviceTypeET.setText(doctor.serviceType);
-            designationET.setText(doctor.designation);
-            agencyNameET.setText(doctor.agencyName);
-            addressET.setText(doctor.address);
-            apptPhoneET.setText(doctor.appointmentPhone);
-            progressBar.setVisibility(View.GONE);
+            //Doctor doctor = dataSnapshot.getValue(Doctor.class);
+
+            for (DataSnapshot docSnapshot: dataSnapshot.getChildren()) {
+                Doctor doctor = new Doctor((String) docSnapshot.child("name").getValue(),
+                        (String) docSnapshot.child("serviceType").getValue(),
+                        (String) docSnapshot.child("designation").getValue(),
+                        (String) docSnapshot.child("agencyName").getValue(),
+                        (String) docSnapshot.child("address").getValue(),
+                        (String) docSnapshot.child("appointmentPhone").getValue(),
+                        (String) docSnapshot.child("uId").getValue());
+                Log.d("docName", doctor.name);
+                fullNameTV.setText(doctor.name);
+                fullNameET.setText(doctor.name);
+                serviceTypeET.setText(doctor.serviceType);
+                designationET.setText(doctor.designation);
+                agencyNameET.setText(doctor.agencyName);
+                addressET.setText(doctor.address);
+                apptPhoneET.setText(doctor.appointmentPhone);
+                progressBar.setVisibility(View.GONE);
+            }
         }
 
         @Override
