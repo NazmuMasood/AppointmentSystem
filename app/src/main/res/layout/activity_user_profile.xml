@@ -48,13 +48,24 @@
             android:textColor="#000"
             android:textSize="20sp" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/time_schedule_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weekly Time Schedule >>"
+            android:textColor="@android:color/holo_red_light"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="8dp"/>
+
         <ProgressBar
             android:id="@+id/profilePB"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:theme="@style/AppTheme.WhiteAccent"/>
+            android:theme="@style/AppTheme.WhiteAccent" />
 
         <!--        <TextView-->
         <!--            android:id="@+id/email_field"-->
@@ -228,6 +239,14 @@
                     android:background="@drawable/bg_rounded_corner_solid"
                     android:fontFamily="@font/open_sans"
                     android:text="UPDATE" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+
+                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
 
