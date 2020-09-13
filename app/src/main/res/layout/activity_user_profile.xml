@@ -52,7 +52,7 @@
             android:id="@+id/time_schedule_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Weekly Time Schedule >>"
+            android:text="Weekly Time Schedule"
             android:textColor="@android:color/holo_red_light"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
@@ -240,13 +240,6 @@
                     android:fontFamily="@font/open_sans"
                     android:text="UPDATE" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-
-                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
 

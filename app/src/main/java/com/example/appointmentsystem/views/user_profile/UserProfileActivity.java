@@ -8,8 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,7 +50,7 @@ public class UserProfileActivity extends AppCompatActivity {
             apptPhoneET,
             emailET,
             phoneET;
-    TextView fullNameTV;
+    TextView fullNameTV, timeScheduleTV;
     ProgressBar progressBar;
     FirebaseUser fbUser;
     Doctor doctor;
@@ -76,6 +80,7 @@ public class UserProfileActivity extends AppCompatActivity {
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (!dataSnapshot.exists()) {
                 apptPhoneET.setText(fbUser.getPhoneNumber());
+                timeScheduleTV.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);
                 return;
             }
@@ -163,6 +168,10 @@ public class UserProfileActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(logoutListener);
         updateProfileButton.setOnClickListener(updateProfileListener);
 
+        timeScheduleTV = findViewById(R.id.time_schedule_profile);
+        timeScheduleTV.setPaintFlags(timeScheduleTV.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        timeScheduleTV.setOnClickListener(timeScheduleListener);
+
         fullNameET = findViewById(R.id.full_name_profile);
         serviceTypeET = findViewById(R.id.service_type_profile);
         designationET = findViewById(R.id.designation_profile);
@@ -246,6 +255,14 @@ public class UserProfileActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
             startActivity(intent);
+        }
+    };
+
+    View.OnClickListener timeScheduleListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(getApplicationContext(), "Clicked!",
+                    Toast.LENGTH_LONG).show();
         }
     };
 

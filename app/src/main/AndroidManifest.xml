@@ -16,8 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomTheme">
-        <activity android:name=".views.auth.LoginActivity"></activity>
-        <activity android:name=".views.bottom_navbar.bottomNavActivity"></activity>
+        <activity android:name=".views.time_schedule.TimeScheduleActivity"></activity>
+        <activity android:name=".views.auth.LoginActivity" />
+        <activity android:name=".views.bottom_navbar.bottomNavActivity" />
         <activity android:name=".views.user_profile.UserProfileActivity" />
         <activity android:name=".views.auth.SignupActivity">
             <intent-filter>
@@ -27,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.auth.VerifyPhoneActivity" />
-        <activity android:name=".views.MainActivity"></activity>
+        <activity android:name=".views.MainActivity" />
         <activity
             android:name=".views.calling_screen.PopupDialogueActivity"
             android:noHistory="true"
