@@ -1,7 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.time_schedule.TimeScheduleActivity"/>
+    android:orientation="vertical"
+    tools:context=".views.time_schedule.TimeScheduleActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:background="#fece2f">
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/bg_rounded_corner_transparent"
+            android:fontFamily="@font/open_sans"
+            android:text="LOGOUT" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bg_rounded_corner_transparent"
+            android:backgroundTint="@android:color/black"
+            android:src="@drawable/ic_person_white_24" />
+
+        <TextView
+            android:id="@+id/full_name_field"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/profile_image"
+            android:fontFamily="@font/open_sans"
+            android:includeFontPadding="false"
+            android:text="Weekly Time Schedule"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/time_schedule_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Profile"
+            android:textColor="@android:color/holo_red_light"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="8dp"/>
+
+        <ProgressBar
+            android:id="@+id/profilePB"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:theme="@style/AppTheme.WhiteAccent" />
+    </RelativeLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <Button
+                    android:id="@+id/updateProfileButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/bg_rounded_corner_solid"
+                    android:fontFamily="@font/open_sans"
+                    android:text="UPDATE" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>
