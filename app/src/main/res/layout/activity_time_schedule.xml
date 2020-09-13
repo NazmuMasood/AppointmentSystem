@@ -9,39 +9,39 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="145dp"
+        android:layout_height="120dp"
         android:background="#fece2f">
 
         <Button
-            android:id="@+id/logoutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/logoutButtonTimeSchdl"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/bg_rounded_corner_transparent"
             android:fontFamily="@font/open_sans"
-            android:text="LOGOUT" />
+            android:text="LOGOUT"
+            android:textSize="13sp" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/profile_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/calendar_icon"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/bg_rounded_corner_transparent"
             android:backgroundTint="@android:color/black"
-            android:src="@drawable/ic_person_white_24" />
+            android:src="@drawable/ic_calendar" />
 
         <TextView
-            android:id="@+id/full_name_field"
+            android:id="@+id/time_schedule_heading"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/profile_image"
+            android:layout_toRightOf="@+id/calendar_icon"
             android:fontFamily="@font/open_sans"
             android:includeFontPadding="false"
             android:text="Weekly Time Schedule"
@@ -49,18 +49,18 @@
             android:textSize="20sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/time_schedule_profile"
+            android:id="@+id/view_profile_hlink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View Profile"
-            android:textColor="@android:color/holo_red_light"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginRight="8dp"
             android:layout_marginBottom="15dp"
-            android:layout_marginRight="8dp"/>
+            android:text="View Profile"
+            android:textColor="@android:color/holo_red_light" />
 
         <ProgressBar
-            android:id="@+id/profilePB"
+            android:id="@+id/timeSchdlPB"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,11 +69,9 @@
     </RelativeLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_profile"
+        android:id="@+id/swipe_time_schdl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:layout_height="wrap_content">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -83,16 +81,361 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:padding="8dp">
 
-                <Button
-                    android:id="@+id/updateProfileButton"
+                <!-- Monday Layout -->
+                <LinearLayout
+                    android:id="@+id/monRootLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/bg_rounded_corner_solid"
-                    android:fontFamily="@font/open_sans"
-                    android:text="UPDATE" />
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_square_border_weekday_root"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="#02075d"
+                            android:fontFamily="@font/open_sans"
+                            android:padding="2dp"
+                            android:text="Monday"
+                            android:textColor="@android:color/white" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/monFAB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:backgroundTint="#02075d"
+                            android:clickable="true"
+                            android:scaleType="center"
+                            app:fabCustomSize="24dp"
+                            app:fabSize="auto"
+                            app:srcCompat="@drawable/ic_add_24dp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/monRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Tuesday Layout -->
+                <LinearLayout
+                    android:id="@+id/tueRootLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_square_border_weekday_root"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="#02075d"
+                            android:fontFamily="@font/open_sans"
+                            android:padding="2dp"
+                            android:text="Tuesday"
+                            android:textColor="@android:color/white" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/tueFAB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:backgroundTint="#02075d"
+                            android:clickable="true"
+                            android:scaleType="center"
+                            app:fabCustomSize="24dp"
+                            app:fabSize="auto"
+                            app:srcCompat="@drawable/ic_add_24dp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/tueRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Wednesday Layout -->
+                <LinearLayout
+                    android:id="@+id/wedRootLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_square_border_weekday_root"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="#02075d"
+                            android:fontFamily="@font/open_sans"
+                            android:padding="2dp"
+                            android:text="Wednesday"
+                            android:textColor="@android:color/white" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/wedFAB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:backgroundTint="#02075d"
+                            android:clickable="true"
+                            android:scaleType="center"
+                            app:fabCustomSize="24dp"
+                            app:fabSize="auto"
+                            app:srcCompat="@drawable/ic_add_24dp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/wedRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Thursday Layout -->
+                <LinearLayout
+                    android:id="@+id/thuRootLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_square_border_weekday_root"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="#02075d"
+                            android:fontFamily="@font/open_sans"
+                            android:padding="2dp"
+                            android:text="Thursday"
+                            android:textColor="@android:color/white" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/thuFAB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:backgroundTint="#02075d"
+                            android:clickable="true"
+                            android:scaleType="center"
+                            app:fabCustomSize="24dp"
+                            app:fabSize="auto"
+                            app:srcCompat="@drawable/ic_add_24dp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/thuRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Friday Layout -->
+                <LinearLayout
+                    android:id="@+id/friRootLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_square_border_weekday_root"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="#02075d"
+                            android:fontFamily="@font/open_sans"
+                            android:padding="2dp"
+                            android:text="Friday"
+                            android:textColor="@android:color/white" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/friFAB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:backgroundTint="#02075d"
+                            android:clickable="true"
+                            android:scaleType="center"
+                            app:fabCustomSize="24dp"
+                            app:fabSize="auto"
+                            app:srcCompat="@drawable/ic_add_24dp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/friRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Saturday Layout -->
+                <LinearLayout
+                    android:id="@+id/satRootLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_square_border_weekday_root"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="#02075d"
+                            android:fontFamily="@font/open_sans"
+                            android:padding="2dp"
+                            android:text="Saturday"
+                            android:textColor="@android:color/white" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/satFAB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:backgroundTint="#02075d"
+                            android:clickable="true"
+                            android:scaleType="center"
+                            app:fabCustomSize="24dp"
+                            app:fabSize="auto"
+                            app:srcCompat="@drawable/ic_add_24dp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/satRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Sunday Layout -->
+                <LinearLayout
+                    android:id="@+id/sunRootLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_square_border_weekday_root"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="#02075d"
+                            android:fontFamily="@font/open_sans"
+                            android:padding="2dp"
+                            android:text="Sunday"
+                            android:textColor="@android:color/white" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/sunFAB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:backgroundTint="#02075d"
+                            android:clickable="true"
+                            android:scaleType="center"
+                            app:fabCustomSize="24dp"
+                            app:fabSize="auto"
+                            app:srcCompat="@drawable/ic_add_24dp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/sunRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <!-- End Sunday Layout -->
 
             </LinearLayout>
         </ScrollView>

@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.appointmentsystem.R;
 import com.example.appointmentsystem.models.Doctor;
 import com.example.appointmentsystem.views.auth.LoginActivity;
+import com.example.appointmentsystem.views.time_schedule.TimeScheduleActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -160,7 +161,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private void setupViewComponents() {
         swipeLayout = findViewById(R.id.swipe_profile);
         swipeLayout.setOnRefreshListener(swipeListener);
-        logoutButton = findViewById(R.id.logoutButton);
+        logoutButton = findViewById(R.id.logoutButtonProfile);
         fullNameTV = findViewById(R.id.full_name_field);
         progressBar = findViewById(R.id.profilePB);
         progressBar.setIndeterminate(true);
@@ -258,11 +259,13 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     };
 
+    //Time_Schedule Activity Link Click Listener
     View.OnClickListener timeScheduleListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(getApplicationContext(), "Clicked!",
-                    Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(UserProfileActivity.this, TimeScheduleActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
     };
 
