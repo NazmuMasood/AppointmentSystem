@@ -21,6 +21,7 @@ import com.example.appointmentsystem.models.Doctor;
 import com.example.appointmentsystem.models.TimeSlot;
 import com.example.appointmentsystem.views.auth.LoginActivity;
 import com.example.appointmentsystem.views.user_profile.UserProfileActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class TimeScheduleActivity extends AppCompatActivity {
+public class TimeScheduleActivity extends AppCompatActivity implements View.OnClickListener,
+        OnDeleteItemClickListener {
 
     Button logoutButton;
     TextView profileTV;
@@ -37,13 +39,14 @@ public class TimeScheduleActivity extends AppCompatActivity {
     FirebaseUser fbUser;
     private DatabaseReference dbRef;
 
-    ArrayList<TimeSlot> monTimeSlots;
-    ArrayList<TimeSlot> tueTimeSlots;
-    ArrayList<TimeSlot> wedTimeSlots;
-    ArrayList<TimeSlot> thuTimeSlots;
-    ArrayList<TimeSlot> friTimeSlots;
-    ArrayList<TimeSlot> satTimeSlots;
-    ArrayList<TimeSlot> sunTimeSlots;
+    ArrayList<TimeSlot> monTimeSlots, tueTimeSlots, wedTimeSlots,
+            thuTimeSlots, friTimeSlots, satTimeSlots, sunTimeSlots;
+
+    TimeScheduleAdapter monAdapter, tueAdapter, wedAdapter,
+            thuAdapter, friAdapter, satAdapter, sunAdapter;
+
+    FloatingActionButton monFAB, tueFAB, wedFAB, thuFAB,
+            friFAB, satFAB, sunFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,61 +72,99 @@ public class TimeScheduleActivity extends AppCompatActivity {
         fbUser = FirebaseAuth.getInstance().getCurrentUser();
         dbRef = FirebaseDatabase.getInstance().getReference();
 
+        //Add buttons (FAB) of each weekday
+        monFAB = findViewById(R.id.monFAB);
+        monFAB.setOnClickListener(this);
+        tueFAB = findViewById(R.id.tueFAB);
+        tueFAB.setOnClickListener(this);
+        wedFAB = findViewById(R.id.wedFAB);
+        wedFAB.setOnClickListener(this);
+        thuFAB = findViewById(R.id.thuFAB);
+        thuFAB.setOnClickListener(this);
+        friFAB = findViewById(R.id.friFAB);
+        friFAB.setOnClickListener(this);
+        satFAB = findViewById(R.id.satFAB);
+        satFAB.setOnClickListener(this);
+        sunFAB = findViewById(R.id.sunFAB);
+        sunFAB.setOnClickListener(this);
+
         // Monday recycler view
         RecyclerView monRV = findViewById(R.id.monRecyclerView);
-        monTimeSlots = TimeSlot.createTimeSlotList(2);
-        Log.d("mon", monTimeSlots.get(0).getStartTime());
-        TimeScheduleAdapter monAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "mon", monTimeSlots);
+        monTimeSlots = TimeSlot.createTimeSlotList(0);
+        //Log.d("mon", monTimeSlots.get(0).getStartTime());
+        monAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "mon", monTimeSlots, this);
         monRV.setAdapter(monAdapter);
         monRV.setLayoutManager(new LinearLayoutManager(this));
 
         // Tuesday recycler view
         RecyclerView tueRV = findViewById(R.id.tueRecyclerView);
-        tueTimeSlots = TimeSlot.createTimeSlotList(2);
-        Log.d("tue", tueTimeSlots.get(0).getStartTime());
-        TimeScheduleAdapter tueAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "tue", tueTimeSlots);
+        tueTimeSlots = TimeSlot.createTimeSlotList(0);
+        //Log.d("tue", tueTimeSlots.get(0).getStartTime());
+        tueAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "tue", tueTimeSlots, this);
         tueRV.setAdapter(tueAdapter);
         tueRV.setLayoutManager(new LinearLayoutManager(this));
 
         // wednesday recycler view
         RecyclerView wedRV = findViewById(R.id.wedRecyclerView);
-        wedTimeSlots = TimeSlot.createTimeSlotList(1);
-        Log.d("wed", wedTimeSlots.get(0).getStartTime());
-        TimeScheduleAdapter wedAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "wed", wedTimeSlots);
+        wedTimeSlots = TimeSlot.createTimeSlotList(0);
+        //Log.d("wed", wedTimeSlots.get(0).getStartTime());
+        wedAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "wed", wedTimeSlots, this);
         wedRV.setAdapter(wedAdapter);
         wedRV.setLayoutManager(new LinearLayoutManager(this));
 
         // thursday recycler view
         RecyclerView thuRV = findViewById(R.id.thuRecyclerView);
-        thuTimeSlots = TimeSlot.createTimeSlotList(2);
-        Log.d("thu", thuTimeSlots.get(0).getStartTime());
-        TimeScheduleAdapter thuAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "thu", thuTimeSlots);
+        thuTimeSlots = TimeSlot.createTimeSlotList(0);
+        //Log.d("thu", thuTimeSlots.get(0).getStartTime());
+        thuAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "thu", thuTimeSlots, this);
         thuRV.setAdapter(thuAdapter);
         thuRV.setLayoutManager(new LinearLayoutManager(this));
 
         // friday recycler view
         RecyclerView friRV = findViewById(R.id.friRecyclerView);
-        friTimeSlots = TimeSlot.createTimeSlotList(1);
-        Log.d("fri", friTimeSlots.get(0).getStartTime());
-        TimeScheduleAdapter friAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "fri", friTimeSlots);
+        friTimeSlots = TimeSlot.createTimeSlotList(0);
+        //Log.d("fri", friTimeSlots.get(0).getStartTime());
+        friAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "fri", friTimeSlots, this);
         friRV.setAdapter(friAdapter);
         friRV.setLayoutManager(new LinearLayoutManager(this));
 
         // saturday recycler view
         RecyclerView satRV = findViewById(R.id.satRecyclerView);
-        satTimeSlots = TimeSlot.createTimeSlotList(2);
-        Log.d("sat", satTimeSlots.get(0).getStartTime());
-        TimeScheduleAdapter satAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "sat", satTimeSlots);
+        satTimeSlots = TimeSlot.createTimeSlotList(0);
+        //Log.d("sat", satTimeSlots.get(0).getStartTime());
+        satAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "sat", satTimeSlots, this);
         satRV.setAdapter(satAdapter);
         satRV.setLayoutManager(new LinearLayoutManager(this));
 
         // sunday recycler view
         RecyclerView sunRV = findViewById(R.id.sunRecyclerView);
-        sunTimeSlots = TimeSlot.createTimeSlotList(1);
-        Log.d("sun", sunTimeSlots.get(0).getStartTime());
-        TimeScheduleAdapter sunAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "sun", sunTimeSlots);
+        sunTimeSlots = TimeSlot.createTimeSlotList(0);
+        //Log.d("sun", sunTimeSlots.get(0).getStartTime());
+        sunAdapter = new TimeScheduleAdapter(TimeScheduleActivity.this, "sun", sunTimeSlots, this);
         sunRV.setAdapter(sunAdapter);
         sunRV.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    //Add a timeslot to weekday
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.monFAB:
+                monTimeSlots.add(new TimeSlot("11.30 PM", "11.59PM"));
+                monAdapter.notifyItemInserted(monAdapter.getItemCount());
+                break;
+            default:
+                break;
+        }
+    }
+
+    //Remove timeslot from a weekday
+    @Override
+    public void onDeleteItemClick(String day, int itemIndex) {
+        if (day.equals("mon")) {
+            monTimeSlots.remove(itemIndex);
+            monAdapter.notifyDataSetChanged();
+        }
     }
 
     //View_Profile Activity Link Click Listener

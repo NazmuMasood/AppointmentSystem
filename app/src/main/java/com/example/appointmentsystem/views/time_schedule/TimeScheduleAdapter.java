@@ -25,11 +25,13 @@ public class TimeScheduleAdapter extends
     private Context context;
     private String day;
     private ArrayList<TimeSlot> timeSlots;
+    private OnDeleteItemClickListener onDeleteItemClickListener;
 
-    public TimeScheduleAdapter(Context context, String day, ArrayList<TimeSlot> timeSlots){
+    public TimeScheduleAdapter(Context context, String day, ArrayList<TimeSlot> timeSlots, OnDeleteItemClickListener onDeleteItemClickListener){
         this.context = context;
         this.day = day;
         this.timeSlots = timeSlots;
+        this.onDeleteItemClickListener = onDeleteItemClickListener;
     }
 
     @NonNull
@@ -47,7 +49,7 @@ public class TimeScheduleAdapter extends
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         // Get the data model based on position
         final TimeSlot timeSlot = timeSlots.get(position);
 
@@ -58,8 +60,9 @@ public class TimeScheduleAdapter extends
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Clicked on "+day+" : "+timeSlot.getStartTime(),
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "Clicked on "+day+" : "+timeSlot.getStartTime(),
+//                        Toast.LENGTH_LONG).show();
+                onDeleteItemClickListener.onDeleteItemClick(day, position);
             }
         });
     }

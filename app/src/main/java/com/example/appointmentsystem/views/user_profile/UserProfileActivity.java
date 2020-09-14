@@ -55,7 +55,7 @@ public class UserProfileActivity extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseUser fbUser;
     Doctor doctor;
-    private DatabaseReference dbRef;
+    private DatabaseReference dbRef; String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +97,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         (String) docSnapshot.child("appointmentPhone").getValue(),
                         (String) docSnapshot.child("uId").getValue());
                 Log.d("docName", doctor.name);
+                key = docSnapshot.getKey();
                 fullNameTV.setText(doctor.name);
                 fullNameET.setText(doctor.name);
                 serviceTypeET.setText(doctor.serviceType);
@@ -135,7 +136,9 @@ public class UserProfileActivity extends AppCompatActivity {
         Doctor newDoctorProfile = new Doctor(name, serviceType, designation, agencyName, address, apptPhone, fbUser.getUid());
         //Map<String, Object> DoctorProfileValues = newDoctorProfile.toMap();
         progressBar.setVisibility(View.VISIBLE);
-        String key = dbRef.child("users-profile").push().getKey();
+        if (key==null) {
+            key = dbRef.child("users-profile").push().getKey();
+        }
         dbRef.child("users-profile").child(key).setValue(newDoctorProfile)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
